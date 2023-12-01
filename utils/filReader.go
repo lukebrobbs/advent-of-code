@@ -2,9 +2,9 @@ package utils
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 )
 
 func FileReader(day int) ([]byte, error) {
-	return ioutil.ReadFile(fmt.Sprintf("inputs/day-%d.txt", day))
+	return os.ReadFile(fmt.Sprintf("inputs/day-%d.txt", day))
 }
