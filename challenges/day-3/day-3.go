@@ -1,6 +1,7 @@
 package day3
 
 import (
+	"fmt"
 	"image"
 	"regexp"
 	"strconv"
@@ -12,6 +13,7 @@ func Day3(input string, part2 bool) int {
 
 	grid := map[image.Point]rune{}
 	for y, s := range strings.Fields(string(input)) {
+		fmt.Println(y, s)
 		for x, r := range s {
 			if r != '.' && !unicode.IsDigit(r) {
 				grid[image.Point{x, y}] = r

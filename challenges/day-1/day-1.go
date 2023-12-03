@@ -19,7 +19,7 @@ var numberStringMap = map[string]int{
 }
 
 func Day1(input string, part2 bool) (o int) {
-	values := strings.Split(input, "\n")
+	values := strings.Fields(input)
 
 	for _, v := range values {
 		var first string = ""
