@@ -1,61 +1,24 @@
 package day3
 
 import (
-	"fmt"
-	"image"
-	"os"
-	"regexp"
-	"strconv"
-	"strings"
 	"testing"
-	"unicode"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestDay3(t *testing.T) {
-	input, _ := os.ReadFile("input.txt")
-
-	grid := map[image.Point]rune{}
-	for y, s := range strings.Fields(string(input)) {
-		for x, r := range s {
-			if r != '.' && !unicode.IsDigit(r) {
-				grid[image.Point{x, y}] = r
-			}
-		}
+	tests := map[string]struct {
+		input    string
+		part2    bool
+		expected int
+	}{
+		"part 1": {input: "467..114..\n...*......\n..35..633.\n......#...\n617*......\n.....+.58.\n..592.....\n......755.\n...$.*....\n.664.598..", part2: false, expected: 4361},
+		"part 2": {input: "467..114..\n...*......\n..35..633.\n......#...\n617*......\n.....+.58.\n..592.....\n......755.\n...$.*....\n.664.598..", part2: true, expected: 467835},
 	}
 
-	parts := map[image.Point][]int{}
-	for y, s := range strings.Fields(string(input)) {
-		for _, m := range regexp.MustCompile(`\d+`).FindAllStringIndex(s, -1) {
-			bounds := map[image.Point]struct{}{}
-			for x := m[0]; x < m[1]; x++ {
-				for _, d := range []image.Point{
-					{-1, -1}, {-1, 0}, {-1, 1}, {0, -1},
-					{0, 1}, {1, -1}, {1, 0}, {1, 1},
-				} {
-					bounds[image.Point{x, y}.Add(d)] = struct{}{}
-				}
-			}
-
-			n, _ := strconv.Atoi(s[m[0]:m[1]])
-			for p := range bounds {
-				if _, ok := grid[p]; ok {
-					parts[p] = append(parts[p], n)
-				}
-			}
-		}
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.expected, Day3(tc.input, tc.part2))
+		})
 	}
-
-	part1, part2 := 0, 0
-	for p, ns := range parts {
-		prod := 1
-		for _, n := range ns {
-			part1 += n
-			prod *= n
-		}
-		if grid[p] == '*' && len(ns) == 2 {
-			part2 += prod
-		}
-	}
-	fmt.Println(part1)
-	fmt.Println(part2)
 }
