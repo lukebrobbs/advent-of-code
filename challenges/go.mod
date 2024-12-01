@@ -1,4 +1,4 @@
-module github.com/lukebrobbs/advent-of-code-2023/challenges
+module github.com/lukebrobbs/advent-of-code/challenges
 
 go 1.19
 

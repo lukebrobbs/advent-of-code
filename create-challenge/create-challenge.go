@@ -9,6 +9,7 @@ import (
 	"text/template"
 )
 
+var year = flag.Int("year", 2024, "Advent of code year to run")
 var day = flag.Int("day", 1, "Advent of code day to run")
 
 type Day struct {
@@ -22,12 +23,13 @@ type FileDetail struct {
 func main() {
 	flag.Parse()
 	d := Day{*day}
+	y := *year
 	cwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	dir := fmt.Sprintf("%s/challenges/day-%d", cwd, d.Day)
+	dir := fmt.Sprintf("%s/challenges/%d/day-%d", cwd, y, d.Day)
 	paths := []FileDetail{
 		{template: fmt.Sprintf("%s/create-challenge/challenge.tmpl", cwd), name: fmt.Sprintf("%s/day-%d.go", dir, d.Day)},
 		{template: fmt.Sprintf("%s/create-challenge/challenge-test.tmpl", cwd), name: fmt.Sprintf("%s/day-%d_test.go", dir, d.Day)},

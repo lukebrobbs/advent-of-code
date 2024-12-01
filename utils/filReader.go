@@ -5,6 +5,6 @@ import (
 	"os"
 )
 
-func FileReader(day int) ([]byte, error) {
-	return os.ReadFile(fmt.Sprintf("inputs/day-%d.txt", day))
+func FileReader(year, day int) ([]byte, error) {
+	return os.ReadFile(fmt.Sprintf("inputs/%d/day-%d.txt", year, day))
 }
