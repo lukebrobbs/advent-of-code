@@ -1,3 +1,3 @@
-# Advent of code 2023
+# Advent of code
 
-Collection of challenges around [Advent of Code 2023](https://adventofcode.com/)
+Collection of challenges around [Advent of Code](https://adventofcode.com/)
