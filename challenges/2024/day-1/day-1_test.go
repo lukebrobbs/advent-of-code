@@ -13,7 +13,7 @@ func TestDay1(t *testing.T) {
 		expected int
 	}{
 		"part 1": {input: "3   4\n4   3\n2   5\n1   3\n3   9\n3   3", part2: false, expected: 11},
-		"part 2": {input: "3   4\n4   3\n2   5\n1   3\n3   9\n3   3", part2: true, expected: 11},
+		"part 2": {input: "3   4\n4   3\n2   5\n1   3\n3   9\n3   3", part2: true, expected: 31},
 	}
 
 	for name, tc := range tests {
