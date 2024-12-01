@@ -23,7 +23,7 @@ func Day1(input string, part2 bool) (o int) {
 
 	items := strings.Split(input, "\n")
 	for _, item := range items {
-		parts := strings.Split(item, "   ")
+		parts := strings.Fields(item)
 		num1, _ := strconv.Atoi(parts[0])
 		num2, _ := strconv.Atoi(parts[1])
 		list1 = append(list1, num1)
@@ -32,8 +32,14 @@ func Day1(input string, part2 bool) (o int) {
 	total := 0
 
 	if part2 {
+		freq := make(map[int]int)
+
+		for _, num := range list2 {
+			freq[num]++
+		}
+
 		for _, num := range list1 {
-			total += num * countOccurrences(num, list2)
+			total += num * freq[num]
 		}
 		return total
 	}
