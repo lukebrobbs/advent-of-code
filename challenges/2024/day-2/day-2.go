@@ -9,41 +9,33 @@ import (
 type Handler = func(n1, n2 int) bool
 
 const (
-	GREATER_THAN = "greaterThan"
-	LESS_THAN    = "lessThan"
+	GREATER_THAN = "gt"
+	LESS_THAN    = "lt"
+	MIN_DIFF     = 1
+	MAX_DIFF     = 3
 )
+
+func isSafeDiff(diff int) bool {
+	return diff >= MIN_DIFF && diff <= MAX_DIFF
+}
 
 var handler = map[string]Handler{
 	GREATER_THAN: func(n1, n2 int) bool {
-		diff := n2 - n1
-		return diff >= 1 && diff <= 3
+		return isSafeDiff(n2 - n1)
 	},
 	LESS_THAN: func(n1, n2 int) bool {
-		diff := n1 - n2
-		return diff >= 1 && diff <= 3
+		return isSafeDiff(n1 - n2)
 	},
 }
 
 func determineRelationship(numbers []int) (string, error) {
-	// Check if sequence is increasing
-	increasing := true
-	decreasing := true
-
-	for i := 0; i < len(numbers)-1; i++ {
-		if numbers[i] >= numbers[i+1] {
-			increasing = false
-		}
-		if numbers[i] <= numbers[i+1] {
-			decreasing = false
-		}
-	}
-
-	if increasing {
-		return GREATER_THAN, nil
-	}
-	if decreasing {
+	if numbers[0] >= numbers[1] {
 		return LESS_THAN, nil
 	}
+	if numbers[0] <= numbers[1] {
+		return GREATER_THAN, nil
+	}
+
 	return "", fmt.Errorf("neither strictly increasing nor decreasing")
 }
 
