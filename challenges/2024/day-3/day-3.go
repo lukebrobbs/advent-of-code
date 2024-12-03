@@ -10,15 +10,6 @@ const (
 	DONT = `don't()`
 )
 
-func indexOf(slice []string, item string) int {
-	for i, s := range slice {
-		if s == item {
-			return i
-		}
-	}
-	return -1
-}
-
 func findViableMuls(items []string) []string {
 	var tmp []string
 	enabled := true
