@@ -24,6 +24,7 @@ func Day5(input string, part2 bool) int {
 	ordering := strings.Split(strings.TrimSpace(parts[0]), "\n")
 	updates := strings.Split(strings.TrimSpace(parts[1]), "\n")
 	var output [][]string
+	var invalidUpdates [][]string
 	total := 0
 
 	var rules = make(map[int]Rule)
@@ -55,6 +56,9 @@ updates:
 				index := indexOf(strconv.Itoa(z), updateRow)
 				isValid := index == -1 || index > i
 				if !isValid {
+					if part2 {
+						invalidUpdates = append(invalidUpdates, updateRow)
+					}
 					continue updates
 				}
 			}
@@ -62,17 +66,53 @@ updates:
 				index := indexOf(strconv.Itoa(z), updateRow)
 				isValid := index == -1 || index < i
 				if !isValid {
+					if part2 {
+						invalidUpdates = append(invalidUpdates, updateRow)
+					}
 					continue updates
 				}
 			}
 		}
-		output = append(output, updateRow)
+		if !part2 {
+			output = append(output, updateRow)
+		}
 	}
 
-	for _, n := range output {
-		middleItem := n[len(n)/2]
-		num, _ := strconv.Atoi(middleItem)
-		total += num
+	if !part2 {
+		for _, n := range output {
+			middleItem := n[len(n)/2]
+			num, _ := strconv.Atoi(middleItem)
+			total += num
+		}
+	} else {
+		// Handle part 2 - sort invalid updates
+		for _, update := range invalidUpdates {
+			// Convert strings to ints for sorting
+			nums := make([]int, len(update))
+			for i, s := range update {
+				nums[i], _ = strconv.Atoi(s)
+			}
+
+			// Sort using the rules
+			for i := 0; i < len(nums)-1; i++ {
+				for j := 0; j < len(nums)-i-1; j++ {
+					// Check if nums[j] should come after nums[j+1]
+					shouldSwap := false
+					for _, after := range rules[nums[j]].After {
+						if after == nums[j+1] {
+							shouldSwap = true
+							break
+						}
+					}
+					if shouldSwap {
+						nums[j], nums[j+1] = nums[j+1], nums[j]
+					}
+				}
+			}
+
+			// Add middle number to total
+			total += nums[len(nums)/2]
+		}
 	}
 
 	return total
