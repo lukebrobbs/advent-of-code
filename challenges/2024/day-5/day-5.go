@@ -43,8 +43,6 @@ func Day5(input string, part2 bool) int {
 		rules[after] = afterRule
 	}
 
-	// iterate over updates
-	// check the rules map, and ensure evertthing in before is before it, and everything in after is after
 updates:
 	for _, u := range updates {
 		updateRow := strings.Split(u, ",")
@@ -85,18 +83,14 @@ updates:
 			total += num
 		}
 	} else {
-		// Handle part 2 - sort invalid updates
 		for _, update := range invalidUpdates {
-			// Convert strings to ints for sorting
 			nums := make([]int, len(update))
 			for i, s := range update {
 				nums[i], _ = strconv.Atoi(s)
 			}
 
-			// Sort using the rules
 			for i := 0; i < len(nums)-1; i++ {
 				for j := 0; j < len(nums)-i-1; j++ {
-					// Check if nums[j] should come after nums[j+1]
 					shouldSwap := false
 					for _, after := range rules[nums[j]].After {
 						if after == nums[j+1] {
@@ -110,7 +104,6 @@ updates:
 				}
 			}
 
-			// Add middle number to total
 			total += nums[len(nums)/2]
 		}
 	}
